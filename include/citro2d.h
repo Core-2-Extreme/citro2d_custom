@@ -12,6 +12,13 @@
 extern "C" {
 #endif
 
+#if __GNUC__
+//We don't want to see warnings in 3rd party headers.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+#pragma GCC diagnostic ignored "-Wdouble-promotion"
+#endif //__GNUC__
+
 #include <citro3d.h>
 #include <tex3ds.h>
 
@@ -20,6 +27,10 @@ extern "C" {
 #include "c2d/sprite.h"
 #include "c2d/text.h"
 #include "c2d/font.h"
+
+#if __GNUC__
+#pragma GCC diagnostic pop
+#endif //__GNUC__
 
 #ifdef __cplusplus
 }
