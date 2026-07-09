@@ -31,7 +31,7 @@ INCLUDES	:=	include
 #---------------------------------------------------------------------------------
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
-CFLAGS	:=	-g -Wall -Werror -mword-relocations -save-temps\
+CFLAGS	:=	-Wall -Werror -mword-relocations -save-temps\
 			-ffunction-sections -fdata-sections \
 			$(ARCH) $(BUILD_CFLAGS)
 
@@ -39,7 +39,7 @@ CFLAGS	+=	$(INCLUDE) -D__3DS__ -DCITRO2D_BUILD
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 
-ASFLAGS	:=	-g $(ARCH) $(DEFINES)
+ASFLAGS	:=	$(ARCH) $(DEFINES)
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -94,7 +94,7 @@ export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 .PHONY: clean all doc
 
 #---------------------------------------------------------------------------------
-all: lib/libcitro2d.a lib/libcitro2dd.a
+all: lib/libcitro2d.a #lib/libcitro2dd.a
 
 doc:
 	@doxygen Doxyfile
@@ -127,12 +127,12 @@ lib/libcitro2d.a : lib release $(SOURCES) $(INCLUDES)
 	--no-print-directory -C release \
 	-f $(CURDIR)/Makefile
 
-lib/libcitro2dd.a : lib debug $(SOURCES) $(INCLUDES)
-	@$(MAKE) BUILD=debug OUTPUT=$(CURDIR)/$@ \
-	BUILD_CFLAGS="-DDEBUG=1 -Og" \
-	DEPSDIR=$(CURDIR)/debug \
-	--no-print-directory -C debug \
-	-f $(CURDIR)/Makefile
+# lib/libcitro2dd.a : lib debug $(SOURCES) $(INCLUDES)
+# 	@$(MAKE) BUILD=debug OUTPUT=$(CURDIR)/$@ \
+# 	BUILD_CFLAGS="-DDEBUG=1 -Og" \
+# 	DEPSDIR=$(CURDIR)/debug \
+# 	--no-print-directory -C debug \
+# 	-f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------
 clean:
